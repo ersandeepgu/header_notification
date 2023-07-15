@@ -1,0 +1,30 @@
+<?php if($block->getSetting('enabled')):?>
+    <?php
+    $date_now = date("Y-m-d h:i:s"); // this format is string comparable
+    $date_expired = $block->getSetting('expired_date');
+    if ($date_expired > $date_now): ?>
+        <div
+            class="sticky-notification-bar"
+            style="background-color: <?php echo $this->getSetting('design/background_color') ? $this->getSetting('design/background_color') : 'black'; ?>;
+                    color: <?php echo $this->getSetting('design/text_color') ? $this->getSetting('design/text_color') : 'white'; ?>;";
+        >
+            <span  style="font-weight: <?php echo $this->getSetting('design/font_weight') ? $this->getSetting('design/font_weight') : 500; ?>;
+                   font-size: <?php echo $this->getSetting('design/font_size') ? $this->getSetting('design/font_size') : '16px'; ?>"; class="content">
+                   <?php echo $block->getSetting('content')?></span>
+        </div>
+        <style>
+            <?php= isset($block->getSetting("design/custom_css"))?>
+        </style>
+        <?php if ($block->getSetting('is_sticky')):?>
+            <script>
+                window.addEventListener("load", function() {
+                    var notificationBar;
+                    notificationBar = document.getElementsByClassName("sticky-notification-bar")[0];
+                    notificationBar.style.position = "fixed";
+                    document.getElementsByClassName("page-header")[0].style.marginTop = notificationBar.offsetHeight+"px";
+                });
+            </script>
+        <?php endif;?>
+    <?php endif;?>
+<?php endif;?>
+
